@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>精選攝影作品｜范兆雄</title>
+  <style>
+    :root {
+      --bg: #0f0f0d;
+      --surface: #1a1a16;
+      --border: #2e2e28;
+      --text: #e8e4d9;
+      --muted: #8a8578;
+      --accent: #c8a96e;
+      --accent-dim: #7a6440;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Georgia', 'Times New Roman', '宋體', serif;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    nav a:hover { color: var(--accent); }
+    .nav-title {
+      font-size: 0.85rem;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+
+    /* HEADER */
+    header {
+      padding: 4rem 2rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 40ch;
+    }
+
+    /* GALLERY GRID */
+    #gallery-container {
+      padding: 3rem 2rem;
+    }
+
+    #gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2px;
+    }
+
+    .photo-item {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--surface);
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.3s ease;
+      filter: brightness(0.9) saturate(0.9);
+    }
+
+    .photo-item:hover img {
+      transform: scale(1.04);
+      filter: brightness(1) saturate(1);
+    }
+
+    .photo-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .photo-item:hover .overlay { opacity: 1; }
+
+    /* LOADING / ERROR */
+    #status {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+    .loading-dot {
+      display: inline-block;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* LIGHTBOX */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    #lightbox.active { display: flex; }
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      color: var(--muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+      padding: 0.5rem;
+    }
+    #lightbox-close:hover { color: var(--text); }
+    #lightbox-prev, #lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    #lightbox-prev:hover, #lightbox-next:hover { color: var(--text); border-color: var(--accent); }
+    #lightbox-prev { left: 1.5rem; }
+    #lightbox-next { right: 1.5rem; }
+    #lightbox-counter {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* LOAD MORE */
+    #load-more-btn {
+      display: none;
+      margin: 3rem auto;
+      padding: 0.75rem 2.5rem;
+      background: none;
+      border: 1px solid var(--accent-dim);
+      color: var(--accent);
+      font-family: inherit;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    #load-more-btn:hover { border-color: var(--accent); color: var(--text); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 2.5rem 1.25rem 2rem; }
+      #gallery-container { padding: 2rem 0; }
+      #gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 1px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">← 返回首頁</a>
+  <span class="nav-title">野鳥攝影文集</span>
+  <a href="book.html">書籍</a>
+</nav>
+
+<header>
+  <p class="eyebrow">Photos · 精選作品</p>
+  <h1>野鳥攝影<br>精選集</h1>
+  <p class="subtitle">范兆雄四十年野鳥攝影精粹，人鳥互動之間，捕捉自然最純粹的瞬間。</p>
+</header>
+
+<div id="gallery-container">
+  <div id="status"><span class="loading-dot">◎</span> 載入中…</div>
+  <div id="gallery-grid"></div>
+  <div style="text-align:center">
+    <button id="load-more-btn">載入更多</button>
+  </div>
+</div>
+
+<footer>
+  范兆雄 · 野鳥生態攝影 · 台南
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <button id="lightbox-close">✕</button>
+  <button id="lightbox-prev">‹</button>
+  <img id="lightbox-img" src="" alt="">
+  <button id="lightbox-next">›</button>
+  <span id="lightbox-counter"></span>
+</div>
+
+<script>
+  const GITHUB_USER = 'gogojuri-prog';
+  const GITHUB_REPO = 'wildbird-portfolio';
+  const GITHUB_FOLDER = 'gallery';
+  const BATCH = 60; // 每次顯示幾張
+
+  let allPhotos = [];
+  let displayed = 0;
+  let currentIndex = 0;
+
+  async function loadPhotos() {
+    try {
+      const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GITHUB_FOLDER}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const files = await res.json();
+
+      allPhotos = files
+        .filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name))
+        .map(f => f.download_url);
+
+      document.getElementById('status').style.display = 'none';
+
+      if (allPhotos.length === 0) {
+        document.getElementById('status').style.display = 'block';
+        document.getElementById('status').textContent = '尚無照片。';
+        return;
+      }
+
+      renderBatch();
+    } catch (e) {
+      document.getElementById('status').textContent = '載入失敗，請稍後再試。';
+      console.error(e);
+    }
+  }
+
+  function renderBatch() {
+    const grid = document.getElementById('gallery-grid');
+    const end = Math.min(displayed + BATCH, allPhotos.length);
+
+    for (let i = displayed; i < end; i++) {
+      const item = document.createElement('div');
+      item.className = 'photo-item';
+      item.innerHTML = `
+        <img src="${allPhotos[i]}" alt="野鳥攝影作品" loading="lazy">
+        <div class="overlay"></div>
+      `;
+      item.addEventListener('click', () => openLightbox(i));
+      grid.appendChild(item);
+    }
+
+    displayed = end;
+
+    const btn = document.getElementById('load-more-btn');
+    if (displayed < allPhotos.length) {
+      btn.style.display = 'block';
+    } else {
+      btn.style.display = 'none';
+    }
+  }
+
+  document.getElementById('load-more-btn').addEventListener('click', renderBatch);
+
+  // Lightbox
+  function openLightbox(index) {
+    currentIndex = index;
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('active');
+  }
+
+  function updateLightbox() {
+    document.getElementById('lightbox-img').src = allPhotos[currentIndex];
+    document.getElementById('lightbox-counter').textContent =
+      `${currentIndex + 1} / ${allPhotos.length}`;
+  }
+
+  document.getElementById('lightbox-close').addEventListener('click', () => {
+    document.getElementById('lightbox').classList.remove('active');
+  });
+
+  document.getElementById('lightbox-prev').addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + allPhotos.length) % allPhotos.length;
+    updateLightbox();
+  });
+
+  document.getElementById('lightbox-next').addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % allPhotos.length;
+    updateLightbox();
+  });
+
+  document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('lightbox')) {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('lightbox').classList.contains('active')) return;
+    if (e.key === 'ArrowLeft') {
+      currentIndex = (currentIndex - 1 + allPhotos.length) % allPhotos.length;
+      updateLightbox();
+    } else if (e.key === 'ArrowRight') {
+      currentIndex = (currentIndex + 1) % allPhotos.length;
+      updateLightbox();
+    } else if (e.key === 'Escape') {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+  });
+
+  loadPhotos();
+</script>
+</body>
+</html>
