@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>野鳥動態美的表現技術｜范兆雄</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&display=swap');
+:root{--sand:#c9bc99;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1a18;color:#fff;font-family:'Noto Serif TC','Georgia',serif;min-height:100vh;display:flex;flex-direction:column}
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;background:rgba(26,26,24,.92);backdrop-filter:blur(12px);padding:0 32px;height:48px;border-bottom:1px solid rgba(201,188,153,.12)}
+.site-nav a{text-decoration:none;font-size:.7rem;letter-spacing:.2em;color:rgba(255,255,255,.5);white-space:nowrap;padding:0 14px;height:48px;display:flex;align-items:center;transition:color .2s;font-family:'Noto Serif TC','Georgia',serif}
+.site-nav a:hover{color:rgba(255,255,255,.9)}
+.site-nav a.home{color:var(--sand);padding-left:0;margin-right:8px;border-right:1px solid rgba(201,188,153,.2)}
+.site-nav .title{font-size:.78rem;color:rgba(255,255,255,.8);letter-spacing:.1em;margin-left:4px}
+.site-nav .spacer{flex:1}
+.site-nav .counter{font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:.15em}
+.viewer{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:72px 24px 120px;min-height:100vh}
+.slide-wrap{width:100%;max-width:900px}
+.slide-img{width:100%;display:block;border-radius:2px;box-shadow:0 8px 48px rgba(0,0,0,.6)}
+.controls{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(26,26,24,.95);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.07);padding:16px 32px;display:flex;align-items:center;gap:20px}
+.btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);cursor:pointer;font-family:'Noto Serif TC','Georgia',serif;font-size:.75rem;letter-spacing:.15em;padding:8px 20px;border-radius:2px;transition:all .2s}
+.btn:hover:not(:disabled){background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.4)}
+.btn:disabled{opacity:.25;cursor:default}
+.progress-wrap{flex:1;display:flex;align-items:center;gap:14px}
+.progress-bar{flex:1;height:2px;background:rgba(255,255,255,.1);border-radius:1px;cursor:pointer}
+.progress-fill{height:100%;background:var(--sand);border-radius:1px;transition:width .15s}
+.page-input{background:none;border:none;border-bottom:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-family:'Noto Serif TC','Georgia',serif;font-size:.75rem;width:40px;text-align:center;padding:2px 0}
+.page-input:focus{outline:none;border-color:var(--sand)}
+.total{font-size:.75rem;color:rgba(255,255,255,.3);letter-spacing:.1em}
+.hint{position:fixed;bottom:80px;right:32px;font-size:.65rem;color:rgba(255,255,255,.2);letter-spacing:.12em;text-align:right;line-height:2}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="home" href="index.html">← 文集</a>
+  <span class="title">野鳥動態美的表現技術</span>
+  <div class="spacer"></div>
+  <span class="counter" id="nav-counter">1 / 272</span>
+</nav>
+<div class="viewer">
+  <div class="slide-wrap">
+    <img class="slide-img" id="slide-img" src="" alt="投影片">
+  </div>
+</div>
+<div class="hint">← → 鍵盤切換</div>
+<div class="controls">
+  <button class="btn" id="btn-prev" onclick="go(-1)">← 上一頁</button>
+  <div class="progress-wrap">
+    <div class="progress-bar" onclick="seekTo(event)">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+  <input class="page-input" id="page-input" type="number" min="1" max="272" value="1" onchange="jumpTo(this.value)">
+  <span class="total">/ 272</span>
+  <button class="btn" id="btn-next" onclick="go(1)">下一頁 →</button>
+</div>
+<script>
+const slides = [
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-000.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-001.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-002.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-003.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-004.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-005.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-006.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-007.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-008.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-009.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-010.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-011.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-012.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-013.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-014.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-015.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-016.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-017.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-018.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-019.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-020.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-021.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-022.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-023.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-024.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-025.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-026.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-027.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-028.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-029.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-030.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-031.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-032.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-033.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-034.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-035.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-036.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-037.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-038.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-039.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-040.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-041.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-042.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-043.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-044.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-045.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-046.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-047.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-048.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-049.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-050.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-051.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-052.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-053.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-054.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-055.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-056.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-057.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-058.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-059.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-060.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-061.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-062.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-063.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-064.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-065.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-066.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-067.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-068.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-069.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-070.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-071.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-072.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-073.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-074.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-075.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-076.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-077.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-078.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-079.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-080.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-081.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-082.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-083.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-084.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-085.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-086.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-087.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-088.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-089.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-090.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-091.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-092.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-093.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-094.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-095.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-096.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-097.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-098.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-099.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-100.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-101.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-102.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-103.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-104.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-105.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-106.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-107.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-108.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-109.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-110.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-111.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-112.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-113.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-114.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-115.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-116.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-117.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-118.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-119.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-120.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-121.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-122.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-123.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-124.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-125.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-126.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-127.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-128.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-129.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-130.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-131.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-132.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-133.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-134.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-135.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-136.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-137.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-138.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-139.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-140.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-141.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-142.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-143.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-144.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-145.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-146.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-147.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-148.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-149.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-150.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-151.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-152.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-153.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-154.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-155.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-156.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-157.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-158.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-159.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-160.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-161.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-162.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-163.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-164.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-165.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-166.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-167.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-168.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-169.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-170.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-171.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-172.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-173.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-174.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-175.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-176.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-177.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-178.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-179.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-180.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-181.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-182.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-183.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-184.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-185.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-186.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-187.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-188.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-189.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-190.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-191.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-192.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-193.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-194.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-195.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-196.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-197.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-198.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-199.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-200.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-201.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-202.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-203.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-204.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-205.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-206.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-207.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-208.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-209.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-210.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-211.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-212.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-213.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-214.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-215.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-216.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-217.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-218.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-219.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-220.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-221.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-222.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-223.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-224.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-225.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-226.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-227.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-228.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-229.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-230.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-231.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-232.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-233.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-234.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-235.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-236.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-237.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-238.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-239.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-240.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-241.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-242.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-243.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-244.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-245.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-246.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-247.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-248.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-249.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-250.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-251.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-252.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-253.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-254.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-255.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-256.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-257.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-258.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-259.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-260.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-261.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-262.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-263.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-264.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-265.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-266.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-267.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-268.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-269.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-270.jpeg",
+  "images/bird-dynamic-beauty/bird-dynamic-beauty-271.jpeg",
+];
+let cur = 0;
+const total = slides.length;
+function render() {
+  document.getElementById('slide-img').src = slides[cur];
+  document.getElementById('nav-counter').textContent = (cur+1) + ' / ' + total;
+  document.getElementById('page-input').value = cur+1;
+  document.getElementById('progress-fill').style.width = ((cur+1)/total*100) + '%';
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').disabled = cur === total-1;
+}
+function go(d) { cur = Math.max(0, Math.min(total-1, cur+d)); render(); }
+function jumpTo(v) { cur = Math.max(0, Math.min(total-1, parseInt(v)-1||0)); render(); }
+function seekTo(e) {
+  const bar = e.currentTarget;
+  cur = Math.floor(e.offsetX / bar.offsetWidth * total);
+  render();
+}
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') go(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') go(-1);
+});
+render();
+</script>
+</body>
+</html>

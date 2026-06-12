@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>認識生態攝影｜范兆雄</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&display=swap');
+:root{
+  --ink:#1c1c1a;--paper:#f6f3ec;--sand:#c9bc99;--moss:#4e5f3c;
+  --dusk:#2e3b44;--accent:#a84f22;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#1a1a18;color:#fff;font-family:'Noto Serif TC','Georgia',serif;min-height:100vh;display:flex;flex-direction:column}
+
+/* NAV */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;background:rgba(26,26,24,.92);backdrop-filter:blur(12px);padding:0 32px;height:48px;border-bottom:1px solid rgba(201,188,153,.12)}
+.site-nav a{text-decoration:none;font-size:.7rem;letter-spacing:.2em;color:rgba(255,255,255,.5);white-space:nowrap;padding:0 14px;height:48px;display:flex;align-items:center;transition:color .2s;font-family:'Noto Serif TC','Georgia',serif}
+.site-nav a:hover{color:rgba(255,255,255,.9)}
+.site-nav a.home{color:var(--sand);padding-left:0;margin-right:8px;border-right:1px solid rgba(201,188,153,.2)}
+.site-nav .title{font-size:.78rem;color:rgba(255,255,255,.8);letter-spacing:.1em;margin-left:4px}
+.site-nav .spacer{flex:1}
+.site-nav .counter{font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:.15em}
+
+/* MAIN */
+.viewer{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:72px 24px 120px;min-height:100vh}
+.slide-wrap{position:relative;width:100%;max-width:900px}
+.slide-img{width:100%;display:block;border-radius:2px;box-shadow:0 8px 48px rgba(0,0,0,.6)}
+
+/* CONTROLS */
+.controls{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(26,26,24,.95);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.07);padding:16px 32px;display:flex;align-items:center;gap:20px}
+.btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);cursor:pointer;font-family:'Noto Serif TC','Georgia',serif;font-size:.75rem;letter-spacing:.15em;padding:8px 20px;border-radius:2px;transition:all .2s}
+.btn:hover:not(:disabled){background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.4)}
+.btn:disabled{opacity:.25;cursor:default}
+.progress-wrap{flex:1;display:flex;align-items:center;gap:14px}
+.progress-bar{flex:1;height:2px;background:rgba(255,255,255,.1);border-radius:1px;cursor:pointer;position:relative}
+.progress-fill{height:100%;background:var(--sand);border-radius:1px;transition:width .15s}
+.page-input{background:none;border:none;border-bottom:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-family:'Noto Serif TC','Georgia',serif;font-size:.75rem;letter-spacing:.1em;width:36px;text-align:center;padding:2px 0}
+.page-input:focus{outline:none;border-color:var(--sand)}
+.total{font-size:.75rem;color:rgba(255,255,255,.3);letter-spacing:.1em}
+
+/* KEYBOARD HINT */
+.hint{position:fixed;bottom:80px;right:32px;font-size:.65rem;color:rgba(255,255,255,.2);letter-spacing:.12em;text-align:right;line-height:2}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="home" href="index.html">← 文集</a>
+  <span class="title">認識生態攝影</span>
+  <div class="spacer"></div>
+  <span class="counter" id="nav-counter">1 / 223</span>
+</nav>
+
+<div class="viewer">
+  <div class="slide-wrap">
+    <img class="slide-img" id="slide-img" src="" alt="投影片">
+  </div>
+</div>
+
+<div class="hint">← → 鍵盤切換</div>
+
+<div class="controls">
+  <button class="btn" id="btn-prev" onclick="go(-1)">← 上一頁</button>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progress-bar" onclick="seekTo(event)">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+  <input class="page-input" id="page-input" type="number" min="1" max="223" value="1" onchange="jumpTo(this.value)">
+  <span class="total">/ 223</span>
+  <button class="btn" id="btn-next" onclick="go(1)">下一頁 →</button>
+</div>
+
+<script>
+const slides = [
+  "images/ecology-photography/ecology-photography-000.jpeg",
+  "images/ecology-photography/ecology-photography-001.jpeg",
+  "images/ecology-photography/ecology-photography-002.jpeg",
+  "images/ecology-photography/ecology-photography-003.jpeg",
+  "images/ecology-photography/ecology-photography-004.jpeg",
+  "images/ecology-photography/ecology-photography-005.jpeg",
+  "images/ecology-photography/ecology-photography-006.jpeg",
+  "images/ecology-photography/ecology-photography-007.jpeg",
+  "images/ecology-photography/ecology-photography-008.jpeg",
+  "images/ecology-photography/ecology-photography-009.jpeg",
+  "images/ecology-photography/ecology-photography-010.jpeg",
+  "images/ecology-photography/ecology-photography-011.jpeg",
+  "images/ecology-photography/ecology-photography-012.jpeg",
+  "images/ecology-photography/ecology-photography-013.jpeg",
+  "images/ecology-photography/ecology-photography-014.jpeg",
+  "images/ecology-photography/ecology-photography-015.jpeg",
+  "images/ecology-photography/ecology-photography-016.jpeg",
+  "images/ecology-photography/ecology-photography-017.jpeg",
+  "images/ecology-photography/ecology-photography-018.jpeg",
+  "images/ecology-photography/ecology-photography-019.jpeg",
+  "images/ecology-photography/ecology-photography-020.jpeg",
+  "images/ecology-photography/ecology-photography-021.jpeg",
+  "images/ecology-photography/ecology-photography-022.jpeg",
+  "images/ecology-photography/ecology-photography-023.jpeg",
+  "images/ecology-photography/ecology-photography-024.jpeg",
+  "images/ecology-photography/ecology-photography-025.jpeg",
+  "images/ecology-photography/ecology-photography-026.jpeg",
+  "images/ecology-photography/ecology-photography-027.jpeg",
+  "images/ecology-photography/ecology-photography-028.jpeg",
+  "images/ecology-photography/ecology-photography-029.jpeg",
+  "images/ecology-photography/ecology-photography-030.jpeg",
+  "images/ecology-photography/ecology-photography-031.jpeg",
+  "images/ecology-photography/ecology-photography-032.jpeg",
+  "images/ecology-photography/ecology-photography-033.jpeg",
+  "images/ecology-photography/ecology-photography-034.jpeg",
+  "images/ecology-photography/ecology-photography-035.jpeg",
+  "images/ecology-photography/ecology-photography-036.jpeg",
+  "images/ecology-photography/ecology-photography-037.jpeg",
+  "images/ecology-photography/ecology-photography-038.jpeg",
+  "images/ecology-photography/ecology-photography-039.jpeg",
+  "images/ecology-photography/ecology-photography-040.jpeg",
+  "images/ecology-photography/ecology-photography-041.jpeg",
+  "images/ecology-photography/ecology-photography-042.jpeg",
+  "images/ecology-photography/ecology-photography-043.jpeg",
+  "images/ecology-photography/ecology-photography-044.jpeg",
+  "images/ecology-photography/ecology-photography-045.jpeg",
+  "images/ecology-photography/ecology-photography-046.jpeg",
+  "images/ecology-photography/ecology-photography-047.jpeg",
+  "images/ecology-photography/ecology-photography-048.jpeg",
+  "images/ecology-photography/ecology-photography-049.jpeg",
+  "images/ecology-photography/ecology-photography-050.jpeg",
+  "images/ecology-photography/ecology-photography-051.jpeg",
+  "images/ecology-photography/ecology-photography-052.jpeg",
+  "images/ecology-photography/ecology-photography-053.jpeg",
+  "images/ecology-photography/ecology-photography-054.jpeg",
+  "images/ecology-photography/ecology-photography-055.jpeg",
+  "images/ecology-photography/ecology-photography-056.jpeg",
+  "images/ecology-photography/ecology-photography-057.jpeg",
+  "images/ecology-photography/ecology-photography-058.jpeg",
+  "images/ecology-photography/ecology-photography-059.jpeg",
+  "images/ecology-photography/ecology-photography-060.jpeg",
+  "images/ecology-photography/ecology-photography-061.jpeg",
+  "images/ecology-photography/ecology-photography-062.jpeg",
+  "images/ecology-photography/ecology-photography-063.jpeg",
+  "images/ecology-photography/ecology-photography-064.jpeg",
+  "images/ecology-photography/ecology-photography-065.jpeg",
+  "images/ecology-photography/ecology-photography-066.jpeg",
+  "images/ecology-photography/ecology-photography-067.jpeg",
+  "images/ecology-photography/ecology-photography-068.jpeg",
+  "images/ecology-photography/ecology-photography-069.jpeg",
+  "images/ecology-photography/ecology-photography-070.jpeg",
+  "images/ecology-photography/ecology-photography-071.jpeg",
+  "images/ecology-photography/ecology-photography-072.jpeg",
+  "images/ecology-photography/ecology-photography-073.jpeg",
+  "images/ecology-photography/ecology-photography-074.jpeg",
+  "images/ecology-photography/ecology-photography-075.jpeg",
+  "images/ecology-photography/ecology-photography-076.jpeg",
+  "images/ecology-photography/ecology-photography-077.jpeg",
+  "images/ecology-photography/ecology-photography-078.jpeg",
+  "images/ecology-photography/ecology-photography-079.jpeg",
+  "images/ecology-photography/ecology-photography-080.jpeg",
+  "images/ecology-photography/ecology-photography-081.jpeg",
+  "images/ecology-photography/ecology-photography-082.jpeg",
+  "images/ecology-photography/ecology-photography-083.jpeg",
+  "images/ecology-photography/ecology-photography-084.jpeg",
+  "images/ecology-photography/ecology-photography-085.jpeg",
+  "images/ecology-photography/ecology-photography-086.jpeg",
+  "images/ecology-photography/ecology-photography-087.jpeg",
+  "images/ecology-photography/ecology-photography-088.jpeg",
+  "images/ecology-photography/ecology-photography-089.jpeg",
+  "images/ecology-photography/ecology-photography-090.jpeg",
+  "images/ecology-photography/ecology-photography-091.jpeg",
+  "images/ecology-photography/ecology-photography-092.jpeg",
+  "images/ecology-photography/ecology-photography-093.jpeg",
+  "images/ecology-photography/ecology-photography-094.jpeg",
+  "images/ecology-photography/ecology-photography-095.jpeg",
+  "images/ecology-photography/ecology-photography-096.jpeg",
+  "images/ecology-photography/ecology-photography-097.jpeg",
+  "images/ecology-photography/ecology-photography-098.jpeg",
+  "images/ecology-photography/ecology-photography-099.jpeg",
+  "images/ecology-photography/ecology-photography-100.jpeg",
+  "images/ecology-photography/ecology-photography-101.jpeg",
+  "images/ecology-photography/ecology-photography-102.jpeg",
+  "images/ecology-photography/ecology-photography-103.jpeg",
+  "images/ecology-photography/ecology-photography-104.jpeg",
+  "images/ecology-photography/ecology-photography-105.jpeg",
+  "images/ecology-photography/ecology-photography-106.jpeg",
+  "images/ecology-photography/ecology-photography-107.jpeg",
+  "images/ecology-photography/ecology-photography-108.jpeg",
+  "images/ecology-photography/ecology-photography-109.jpeg",
+  "images/ecology-photography/ecology-photography-110.jpeg",
+  "images/ecology-photography/ecology-photography-111.jpeg",
+  "images/ecology-photography/ecology-photography-112.jpeg",
+  "images/ecology-photography/ecology-photography-113.jpeg",
+  "images/ecology-photography/ecology-photography-114.jpeg",
+  "images/ecology-photography/ecology-photography-115.jpeg",
+  "images/ecology-photography/ecology-photography-116.jpeg",
+  "images/ecology-photography/ecology-photography-117.jpeg",
+  "images/ecology-photography/ecology-photography-118.jpeg",
+  "images/ecology-photography/ecology-photography-119.jpeg",
+  "images/ecology-photography/ecology-photography-120.jpeg",
+  "images/ecology-photography/ecology-photography-121.jpeg",
+  "images/ecology-photography/ecology-photography-122.jpeg",
+  "images/ecology-photography/ecology-photography-123.jpeg",
+  "images/ecology-photography/ecology-photography-124.jpeg",
+  "images/ecology-photography/ecology-photography-125.jpeg",
+  "images/ecology-photography/ecology-photography-126.jpeg",
+  "images/ecology-photography/ecology-photography-127.jpeg",
+  "images/ecology-photography/ecology-photography-128.jpeg",
+  "images/ecology-photography/ecology-photography-129.jpeg",
+  "images/ecology-photography/ecology-photography-130.jpeg",
+  "images/ecology-photography/ecology-photography-131.jpeg",
+  "images/ecology-photography/ecology-photography-132.jpeg",
+  "images/ecology-photography/ecology-photography-133.jpeg",
+  "images/ecology-photography/ecology-photography-134.jpeg",
+  "images/ecology-photography/ecology-photography-135.jpeg",
+  "images/ecology-photography/ecology-photography-136.jpeg",
+  "images/ecology-photography/ecology-photography-137.jpeg",
+  "images/ecology-photography/ecology-photography-138.jpeg",
+  "images/ecology-photography/ecology-photography-139.jpeg",
+  "images/ecology-photography/ecology-photography-140.jpeg",
+  "images/ecology-photography/ecology-photography-141.jpeg",
+  "images/ecology-photography/ecology-photography-142.jpeg",
+  "images/ecology-photography/ecology-photography-143.jpeg",
+  "images/ecology-photography/ecology-photography-144.jpeg",
+  "images/ecology-photography/ecology-photography-145.jpeg",
+  "images/ecology-photography/ecology-photography-146.jpeg",
+  "images/ecology-photography/ecology-photography-147.jpeg",
+  "images/ecology-photography/ecology-photography-148.jpeg",
+  "images/ecology-photography/ecology-photography-149.jpeg",
+  "images/ecology-photography/ecology-photography-150.jpeg",
+  "images/ecology-photography/ecology-photography-151.jpeg",
+  "images/ecology-photography/ecology-photography-152.jpeg",
+  "images/ecology-photography/ecology-photography-153.jpeg",
+  "images/ecology-photography/ecology-photography-154.jpeg",
+  "images/ecology-photography/ecology-photography-155.jpeg",
+  "images/ecology-photography/ecology-photography-156.jpeg",
+  "images/ecology-photography/ecology-photography-157.jpeg",
+  "images/ecology-photography/ecology-photography-158.jpeg",
+  "images/ecology-photography/ecology-photography-159.jpeg",
+  "images/ecology-photography/ecology-photography-160.jpeg",
+  "images/ecology-photography/ecology-photography-161.jpeg",
+  "images/ecology-photography/ecology-photography-162.jpeg",
+  "images/ecology-photography/ecology-photography-163.jpeg",
+  "images/ecology-photography/ecology-photography-164.jpeg",
+  "images/ecology-photography/ecology-photography-165.jpeg",
+  "images/ecology-photography/ecology-photography-166.jpeg",
+  "images/ecology-photography/ecology-photography-167.jpeg",
+  "images/ecology-photography/ecology-photography-168.jpeg",
+  "images/ecology-photography/ecology-photography-169.jpeg",
+  "images/ecology-photography/ecology-photography-170.jpeg",
+  "images/ecology-photography/ecology-photography-171.jpeg",
+  "images/ecology-photography/ecology-photography-172.jpeg",
+  "images/ecology-photography/ecology-photography-173.jpeg",
+  "images/ecology-photography/ecology-photography-174.jpeg",
+  "images/ecology-photography/ecology-photography-175.jpeg",
+  "images/ecology-photography/ecology-photography-176.jpeg",
+  "images/ecology-photography/ecology-photography-177.jpeg",
+  "images/ecology-photography/ecology-photography-178.jpeg",
+  "images/ecology-photography/ecology-photography-179.jpeg",
+  "images/ecology-photography/ecology-photography-180.jpeg",
+  "images/ecology-photography/ecology-photography-181.jpeg",
+  "images/ecology-photography/ecology-photography-182.jpeg",
+  "images/ecology-photography/ecology-photography-183.jpeg",
+  "images/ecology-photography/ecology-photography-184.jpeg",
+  "images/ecology-photography/ecology-photography-185.jpeg",
+  "images/ecology-photography/ecology-photography-186.jpeg",
+  "images/ecology-photography/ecology-photography-187.jpeg",
+  "images/ecology-photography/ecology-photography-188.jpeg",
+  "images/ecology-photography/ecology-photography-189.jpeg",
+  "images/ecology-photography/ecology-photography-190.jpeg",
+  "images/ecology-photography/ecology-photography-191.jpeg",
+  "images/ecology-photography/ecology-photography-192.jpeg",
+  "images/ecology-photography/ecology-photography-193.jpeg",
+  "images/ecology-photography/ecology-photography-194.jpeg",
+  "images/ecology-photography/ecology-photography-195.jpeg",
+  "images/ecology-photography/ecology-photography-196.jpeg",
+  "images/ecology-photography/ecology-photography-197.jpeg",
+  "images/ecology-photography/ecology-photography-198.jpeg",
+  "images/ecology-photography/ecology-photography-199.jpeg",
+  "images/ecology-photography/ecology-photography-200.jpeg",
+  "images/ecology-photography/ecology-photography-201.jpeg",
+  "images/ecology-photography/ecology-photography-202.jpeg",
+  "images/ecology-photography/ecology-photography-203.jpeg",
+  "images/ecology-photography/ecology-photography-204.jpeg",
+  "images/ecology-photography/ecology-photography-205.jpeg",
+  "images/ecology-photography/ecology-photography-206.jpeg",
+  "images/ecology-photography/ecology-photography-207.jpeg",
+  "images/ecology-photography/ecology-photography-208.jpeg",
+  "images/ecology-photography/ecology-photography-209.jpeg",
+  "images/ecology-photography/ecology-photography-210.jpeg",
+  "images/ecology-photography/ecology-photography-211.jpeg",
+  "images/ecology-photography/ecology-photography-212.jpeg",
+  "images/ecology-photography/ecology-photography-213.jpeg",
+  "images/ecology-photography/ecology-photography-214.jpeg",
+  "images/ecology-photography/ecology-photography-215.jpeg",
+  "images/ecology-photography/ecology-photography-216.jpeg",
+  "images/ecology-photography/ecology-photography-217.jpeg",
+  "images/ecology-photography/ecology-photography-218.jpeg",
+  "images/ecology-photography/ecology-photography-219.jpeg",
+  "images/ecology-photography/ecology-photography-220.jpeg",
+  "images/ecology-photography/ecology-photography-221.jpeg",
+  "images/ecology-photography/ecology-photography-222.jpeg",
+];
+
+let cur = 0;
+const total = slides.length;
+
+function render() {
+  document.getElementById('slide-img').src = slides[cur];
+  document.getElementById('nav-counter').textContent = (cur+1) + ' / ' + total;
+  document.getElementById('page-input').value = cur+1;
+  document.getElementById('progress-fill').style.width = ((cur+1)/total*100) + '%';
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').disabled = cur === total-1;
+}
+
+function go(d) {
+  cur = Math.max(0, Math.min(total-1, cur+d));
+  render();
+}
+
+function jumpTo(v) {
+  cur = Math.max(0, Math.min(total-1, parseInt(v)-1||0));
+  render();
+}
+
+function seekTo(e) {
+  const bar = document.getElementById('progress-bar');
+  const ratio = e.offsetX / bar.offsetWidth;
+  cur = Math.floor(ratio * total);
+  render();
+}
+
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') go(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') go(-1);
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>幾則野鳥行為的故事｜范兆雄</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&display=swap');
+:root{--ink:#1c1c1a;--paper:#f6f3ec;--sand:#c9bc99;--moss:#4e5f3c;--horizon:#7a92a0;--dusk:#2e3b44;--accent:#a84f22;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Serif TC','Georgia',serif;line-height:1.95;font-size:17px}
+.hero{position:relative;height:100vh;min-height:580px;overflow:hidden;display:flex;align-items:flex-end}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.52)}
+.hero-content{position:relative;z-index:2;padding:0 64px 72px;color:#fff}
+.hero-tag{font-size:.75rem;letter-spacing:.35em;color:var(--sand);margin-bottom:18px}
+.hero-title{font-size:clamp(2rem,5vw,3.4rem);font-weight:300;line-height:1.25;letter-spacing:.06em;margin-bottom:20px}
+.hero-title em{font-style:normal;color:var(--sand)}
+.hero-sub{font-size:.95rem;color:rgba(255,255,255,.6);letter-spacing:.12em}
+.scroll-hint{position:absolute;bottom:28px;right:48px;z-index:2;color:rgba(255,255,255,.35);font-size:.7rem;letter-spacing:.25em;text-align:center}
+.scroll-hint::after{content:'';display:block;width:1px;height:50px;background:rgba(255,255,255,.25);margin:8px auto 0;animation:drop 2.2s ease-in-out infinite}
+@keyframes drop{0%,100%{opacity:0;transform:scaleY(0);transform-origin:top}40%{opacity:1;transform:scaleY(1);transform-origin:top}90%{opacity:0;transform:scaleY(1);transform-origin:bottom}}
+.wrap{max-width:860px;margin:0 auto;padding:0 48px}
+.intro{padding:96px 0 64px;border-bottom:1px solid var(--sand)}
+.byline{display:flex;align-items:center;gap:14px;margin-bottom:44px}
+.byline::before{content:'';display:block;width:36px;height:1px;background:var(--accent)}
+.byline span{font-size:.85rem;color:var(--accent);letter-spacing:.18em}
+.lead{font-size:1.2rem;line-height:2.1;color:var(--dusk);font-weight:300;padding-left:24px;border-left:3px solid var(--moss)}
+.body-text{padding:64px 0}
+.body-text p{margin-bottom:1.75em;text-align:justify;text-indent:2em}
+.photo-block{margin:72px 0}
+.photo-label{display:block;font-size:11px;letter-spacing:.3em;color:var(--horizon);margin-bottom:14px;font-weight:500}
+.photo-frame img{width:100%;display:block;height:auto;max-height:680px;object-fit:cover}
+.pp-wrap{overflow:hidden}
+.photo-pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.photo-pair img{height:340px;object-fit:cover;width:100%;display:block}
+.pgrid{display:grid;gap:6px}
+.pgrid-3{grid-template-columns:1fr 1fr 1fr}
+.pgrid img{height:280px;object-fit:cover;width:100%;display:block}
+.photo-caption{margin-top:14px;font-size:.8rem;color:var(--horizon);line-height:1.75;padding-left:14px;border-left:2px solid var(--sand)}
+.section-head{font-size:.95rem;font-weight:700;color:var(--moss);letter-spacing:.12em;margin:60px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--sand)}
+.divider{display:flex;align-items:center;gap:18px;margin:56px 0;color:var(--sand);font-size:11px;letter-spacing:.2em}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--sand)}
+.text-block{background:#faf7f0;border-left:3px solid var(--moss);padding:28px 32px;margin:40px 0;font-size:.95rem;line-height:2;color:var(--dusk)}
+.text-block p{text-indent:0;margin-bottom:1em}
+.text-block p:last-child{margin-bottom:0}
+.closing{background:var(--dusk);color:rgba(255,255,255,.75);padding:80px 0;text-align:center}
+.closing-text{max-width:560px;margin:0 auto;font-size:1.05rem;line-height:2.1;font-weight:300;letter-spacing:.04em}
+.closing-sig{margin-top:28px;font-size:.8rem;letter-spacing:.25em;color:var(--sand)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img class="hero-img" src="images/bird-behavior-stories/bird-behavior-stories-000.jpeg" alt="cover">
+  <div class="hero-content">
+    <p class="hero-tag">野鳥生態攝影</p>
+    <h1 class="hero-title">幾則野鳥<em>行為</em>的故事</h1>
+    <p class="hero-sub">范兆雄</p>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+    <div class="byline"><span>WILD BIRD BEHAVIOUR · STORIES</span></div>
+    <p class="lead">野鳥的自食其力和自尊自重的精神是相當可貴的。牠們生活的廣度與深度，自有其生命的哲學理念。</p>
+  </div>
+
+  <div class="body-text">
+
+    <p class="section-head">◎ 交配前的行為示例</p>
+
+    <div class="photo-block"><span class="photo-label">NO.1 / NO.2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-001.jpeg" alt="NO.1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-002.jpeg" alt="NO.2" loading="lazy"></div></div><p class="photo-caption">NO.1 夫妻樹附近，情侶相約枯樹高枝，相偎相依，一起等待朝陽升起。<br><br>NO.2 藪鳥經常相約在同一棵樹枝相互理毛、愛撫，充分表現安全感。</p></div>
+
+    <div class="photo-block"><span class="photo-label">NO.3 / NO.4</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-003.jpeg" alt="NO.3" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-004.jpeg" alt="NO.4" loading="lazy"></div></div><p class="photo-caption">NO.3 日正當中，紅鳩卿卿我我地「熱戀」，毫不忌諱。<br><br>NO.4 水雉戀愛，必有兩頭相近、緊接地面，私語綿綿的畫面。</p></div>
+
+    <div class="photo-block"><span class="photo-label">NO.5</span><div class="photo-frame"><img src="images/bird-behavior-stories/bird-behavior-stories-005.jpeg" alt="NO.5" loading="lazy"></div><p class="photo-caption">NO.5 紅冠水雞訴情過程，經常見到母鳥低頭，待公鳥愛撫。</p></div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 交配後的行為示例</p>
+
+    <div class="photo-block"><span class="photo-label">NO.6 / NO.7</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-006.jpeg" alt="NO.6" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-007.jpeg" alt="NO.7" loading="lazy"></div></div><p class="photo-caption">NO.6 已築愛巢的伴侶，在外取得巢材，另一伴打扮愛屋之後，親三下，已成禮節。<br><br>NO.7 高蹺鴴交配後，兩喙相觸，已是文化禮儀。</p></div>
+
+    <div class="photo-block"><span class="photo-label">NO.8 / NO.9</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-008.jpeg" alt="NO.8" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-009.jpeg" alt="NO.9" loading="lazy"></div></div><p class="photo-caption">NO.8 大白鷺親鳥取食歸巢，和另一半一定發生相親相愛行為，為時一分鐘左右。<br><br>NO.9 雛鳥一旁也會學習親鳥示愛行為，只是不知正確行為為何！</p></div>
+
+    <div class="photo-block"><span class="photo-label">NO.10 / NO.10-1</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-010.jpeg" alt="NO.10" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-011.jpeg" alt="NO.10-1" loading="lazy"></div></div><p class="photo-caption">NO.10 / NO.10-1 彩鷸交配後，偶爾也有不可思議的如圖行為，不知何意？</p></div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 棕沙燕的 CPR 行為</p>
+
+    <p>一群棕沙燕在路上群聚，見一隻由空中飛下（不是墜落）隨之逝去。群鳥飛，身旁同伴為牠作CPR，首先用嘴尖猛刺，順序是由頭到尾，循環兩三次，接著用羽毛包覆其身，由上而下，也做了幾次，救不起來，默哀約一分鐘後離去。</p>
+
+    <div class="photo-block"><span class="photo-label">NO.11 / NO.12 / NO.13</span><div class="pgrid pgrid-3"><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-012.jpeg" alt="NO.11" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-013.jpeg" alt="NO.12" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-014.jpeg" alt="NO.13" loading="lazy"></div></div><p class="photo-caption">NO.11 棕沙燕俯身施救，用嘴尖由頭到尾猛刺，試圖喚醒同伴。NO.12 用羽毛包覆逝去同伴的身軀，重複數次。NO.13 救援無效後，一隻同伴靜靜守在旁邊，為這場令人動容的生死相守留下紀錄。</p></div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 綠繡眼的美感情趣</p>
+
+    <p>一隻小蜘蛛由上垂降，綠繡眼產生「形象直覺」的美感經驗，一直看牠左蘯右蘯，物我兩忘，不知食物在眼前，待恍神過來，已找不到蜘蛛了。</p>
+
+    <div class="photo-block"><span class="photo-label">NO.14 / NO.15 / NO.16</span><div class="pgrid pgrid-3"><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-015.jpeg" alt="NO.14" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-016.jpeg" alt="NO.15" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-017.jpeg" alt="NO.16" loading="lazy"></div></div><p class="photo-caption">NO.14 小蜘蛛從上方垂絲而降，綠繡眼專注凝視，進入「形象直覺」的美感狀態。NO.15 蜘蛛左右擺盪，綠繡眼隨之移動視線，物我兩忘。NO.16 待恍神過來，蜘蛛已不見蹤影，錯失眼前食物。</p></div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 和天敵捉迷藏</p>
+
+    <div class="photo-block"><span class="photo-label">NO.17</span><div class="photo-frame"><img src="images/bird-behavior-stories/bird-behavior-stories-018.jpeg" alt="NO.17" loading="lazy"></div><p class="photo-caption">NO.17 鳳頭蒼鷹是松鼠的天敵，這幅畫面，咫尺天涯——松鼠緊貼樹幹，猛禽就在枝頭，一牆之隔，生死懸念。</p></div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 不顧形象的吃拉</p>
+
+    <div class="photo-block"><span class="photo-label">NO.18</span><div class="photo-frame"><img src="images/bird-behavior-stories/bird-behavior-stories-019.jpeg" alt="NO.18" loading="lazy"></div><p class="photo-caption">NO.18 五色鳥在果實旁「吃飽等餓」，只好題名「去留肝膽兩崑崙」粉飾其行為了。</p></div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 共同創作是愉快的歷程</p>
+
+    <div class="photo-block"><span class="photo-label">NO.19</span><div class="photo-frame"><img src="images/bird-behavior-stories/bird-behavior-stories-020.jpeg" alt="NO.19" loading="lazy"></div><p class="photo-caption">NO.19 東方鴴允許作者在巢下挖個坑放相機仰角拍攝，共同等待白雲飛入畫面適當美感位置。一張照片堪稱作品，人鳥共同創作才是價值。諮商式互動，人鳥間可以成為互信的朋友關係。</p></div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 大白鷺的認同行為</p>
+
+    <div class="photo-block"><span class="photo-label">NO.20</span><div class="photo-frame"><img src="images/bird-behavior-stories/bird-behavior-stories-021.jpeg" alt="NO.20" loading="lazy"></div><p class="photo-caption">NO.20 傍晚時分，茄定石頭公園大白鷺悠閒地在池中休息理毛。圖中主角進行戀愛前的基本動作行為——認同，計五分鐘左右結束。右鳥對左鳥的認同行為，屬於覺察、感受、知覺的主客體間關係的意識行為；牠能內省自己的心理活動。</p></div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 公寓叢林的信使——藍鶺鶇</p>
+
+    <div class="photo-block"><span class="photo-label">NO.21</span><div class="photo-frame"><img src="images/bird-behavior-stories/bird-behavior-stories-022.png" alt="NO.21" loading="lazy"></div><p class="photo-caption">NO.21 與藍鶺鶇發展多日「諮商式互動」模式之後，運用交替作用和 shaping 的心理學技巧，閃燈成了被允許的拍攝工具。牠每年十月來，四月走，前後有三五個年頭，舊屋變新宅的長久環境變化，仍能重演「人面桃花」的故事。</p></div>
+
+    <div class="text-block">
+      <p>牠與你之間的物理距離，便是你與牠的心理距離。和野鳥互動，多日不見後，應將「消弱」和「遺忘」的「常數」指數，及「鳥格發展」的連續性和階段性，需一併列入互動範疇中探究。</p>
+      <p>每當次年十月，閃燈的亮光，居然成為我倆間的「信物」——牠知道是我，我也確信是牠。即使對野鳥形象難以認知，行為中的習慣和毛病，則可輕易判斷是否是同一隻鳥。</p>
+    </div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 和諧互動下的有趣照片</p>
+
+    <div class="photo-block"><span class="photo-label">NO.22 / NO.23 / NO.24</span><div class="pgrid pgrid-3"><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-023.jpeg" alt="NO.22" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-024.jpeg" alt="NO.23" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-025.jpeg" alt="NO.24" loading="lazy"></div></div><p class="photo-caption">作者與黃尾鴝互動，以食物建立「適當」距離為原則。NO.22 擺姿勢可以優雅，NO.23 衝向鏡頭可以坦蕩（焦點僅40cm），NO.24 原地上下飛姿任你拍照，令人快慰。</p></div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 高蹺鴴的教育觀</p>
+
+    <div class="photo-block"><span class="photo-label">NO.25 / NO.26 / NO.27</span><div class="pgrid pgrid-3"><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-026.jpeg" alt="NO.25" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-027.jpeg" alt="NO.26" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-028.jpeg" alt="NO.27" loading="lazy"></div></div><p class="photo-caption">NO.25 下完雨，高媽媽言辭力阻小高外出，小高不聽，一意孤行。媽媽目視其離巢，不動聲色，保持距離地關懷。NO.26 小高受到水深的懲罰，只好回家，低下頭，愧見母親。NO.27 媽媽接納小高，摟抱牠，仍不言語——以行為語言表達愛意，完整且有建設性的教育過程告一段落。</p></div>
+
+    <div class="text-block">
+      <p>高媽媽充分運用老子的「無為」觀——「行不言之教」、「無為而成」。偉大的母親，不作馬後砲式的訓誡，用雙翅摟抱小高，以行為語言表達愛意（行為語言數倍於言語的表情效力），完整且有建設性的教育過程告一段落。</p>
+      <p>小高受到「自然的處罰」（副作用最少的最佳教育方式），不可能埋怨媽媽，反而加深親子依戀關係的價值。今日的父母親能像高媽媽那樣不動聲色的管教孩子嗎？</p>
+    </div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 特殊表情的覓食動作</p>
+
+    <div class="photo-block"><span class="photo-label">NO.28</span><div class="photo-frame"><img src="images/bird-behavior-stories/bird-behavior-stories-029.jpeg" alt="NO.28" loading="lazy"></div><p class="photo-caption">NO.28 小啄木身軀靈巧，覓食動作有趣之至，攀附樹幹的姿態盡顯自然的精妙設計。</p></div>
+
+    <div class="divider">——</div>
+    <p class="section-head">◎ 作者與野鳥互動照片</p>
+
+    <div class="photo-block"><span class="photo-label">NO.29 / NO.30</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-030.jpeg" alt="NO.29" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-behavior-stories/bird-behavior-stories-031.jpeg" alt="NO.30" loading="lazy"></div></div><p class="photo-caption">NO.29 與野鳥互動，作攝影記錄是困難的——互動時比手劃腳不能照相，照相時手持相機不能互動。此圖是僅有在與野鳥互動表情消失前按下的快門，牠正在解讀作者與其互動的行為意義。<br><br>NO.30 作者終日與高蹺鴴密切相處的合照之一，印證了諮商式互動下，人鳥間可以成為互信的朋友關係。</p></div>
+
+  </div>
+</div>
+
+<footer class="closing">
+  <p class="closing-text">野鳥的自食其力和自尊自重的精神是相當可貴的。<br>牠們生活的廣度與深度，自有其生命的哲學理念。</p>
+  <p class="closing-sig">范兆雄 · 野鳥生態攝影</p>
+</footer>
+
+</body>
+</html>

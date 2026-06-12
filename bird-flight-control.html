@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>野鳥飛姿的控制與探索｜范兆雄</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&display=swap');
+:root{--ink:#1c1c1a;--paper:#f6f3ec;--sand:#c9bc99;--moss:#4e5f3c;--horizon:#7a92a0;--dusk:#2e3b44;--accent:#a84f22;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Serif TC','Georgia',serif;line-height:1.95;font-size:17px}
+.hero{position:relative;height:100vh;min-height:580px;overflow:hidden;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;background-image:url('images/bird-flight-control/bird-flight-control-000.jpeg');background-size:cover;background-position:center 45%;filter:brightness(0.38)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.05) 65%,transparent 100%)}
+.hero-content{position:relative;z-index:2;max-width:860px;margin:0 auto;padding:0 48px 88px;width:100%}
+.hero-eyebrow{color:var(--sand);font-size:12px;letter-spacing:.3em;font-weight:300;margin-bottom:18px;opacity:.85}
+.hero-title{font-size:clamp(2.2rem,5vw,4.5rem);font-weight:700;color:#fff;line-height:1.1;letter-spacing:.06em;margin-bottom:20px}
+.hero-author{color:var(--sand);font-size:.95rem;letter-spacing:.2em;font-weight:300}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.4);font-size:11px;letter-spacing:.25em;text-align:center}
+.scroll-hint::after{content:'';display:block;width:1px;height:50px;background:rgba(255,255,255,.25);margin:8px auto 0;animation:drop 2.2s ease-in-out infinite}
+@keyframes drop{0%,100%{opacity:0;transform:scaleY(0);transform-origin:top}40%{opacity:1;transform:scaleY(1);transform-origin:top}90%{opacity:0;transform:scaleY(1);transform-origin:bottom}}
+.wrap{max-width:860px;margin:0 auto;padding:0 48px}
+.intro{padding:96px 0 64px;border-bottom:1px solid var(--sand)}
+.byline{display:flex;align-items:center;gap:14px;margin-bottom:44px}
+.byline::before{content:'';display:block;width:36px;height:1px;background:var(--accent)}
+.byline span{font-size:.85rem;color:var(--accent);letter-spacing:.18em}
+.lead{font-size:1.2rem;line-height:2.1;color:var(--dusk);font-weight:300;padding-left:24px;border-left:3px solid var(--moss)}
+.body-text{padding:64px 0}
+.body-text p{margin-bottom:1.75em;text-align:justify;text-indent:2em}
+.photo-block{margin:72px 0}
+.photo-label{display:block;font-size:11px;letter-spacing:.3em;color:var(--horizon);margin-bottom:14px;font-weight:500}
+.photo-frame img{width:100%;display:block;height:auto;max-height:680px;object-fit:cover}
+.pp-wrap{overflow:hidden}
+.photo-pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.photo-pair img{height:340px;object-fit:cover;width:100%;display:block}
+.pgrid{display:grid;gap:6px}
+.pgrid-3{grid-template-columns:1fr 1fr 1fr}
+.pgrid img{height:280px;object-fit:cover;width:100%;display:block}
+.photo-caption{margin-top:14px;font-size:.8rem;color:var(--horizon);line-height:1.75;padding-left:14px;border-left:2px solid var(--sand)}
+.section-head{font-size:.95rem;font-weight:700;color:var(--moss);letter-spacing:.12em;margin:60px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--sand)}
+.divider{display:flex;align-items:center;gap:18px;margin:56px 0;color:var(--sand);font-size:11px;letter-spacing:.2em}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--sand)}
+.pending-note{background:#faf7f0;border:1px dashed var(--sand);padding:24px 28px;margin:40px 0;color:var(--horizon);font-size:.85rem;text-align:center;letter-spacing:.05em}
+.closing{background:var(--dusk);color:var(--sand);padding:80px 48px;text-align:center;margin-top:80px}
+.closing-text{max-width:620px;margin:0 auto;font-size:1rem;line-height:2.1;font-weight:300;opacity:.85}
+.closing-sig{margin-top:36px;font-size:.8rem;letter-spacing:.2em;opacity:.5}
+@media(max-width:600px){
+  .hero-content,.wrap,.closing{padding-left:24px;padding-right:24px}
+  .photo-pair,.pgrid-3{grid-template-columns:1fr}
+  .photo-pair img,.pgrid img{height:240px}
+  .lead{font-size:1.05rem}
+}
+</style>
+</head>
+<body>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">野鳥生態攝影 · 飛行動態</p>
+    <h1 class="hero-title">野鳥飛姿的<br>控制與探索</h1>
+    <p class="hero-author">范兆雄</p>
+  </div>
+  <p class="scroll-hint">scroll</p>
+</section>
+
+<div class="wrap">
+  <section class="intro">
+    <div class="byline"><span>范兆雄 著</span></div>
+    <p class="lead">野鳥飛姿，不是盲目連拍的運氣，而是預知形相之後，謹慎決定按快門動機的必然成果。按快門，不該是盲目連拍的開始，而是確切體會時機的刹那。</p>
+  </section>
+
+  <div class="body-text">
+    <p>動機產生行為的驅力，動機愈強，刺激因素不變，行為自有下意識的習慣性反應。野鳥當然有習慣性的姿勢和動作。習慣造成動作行為的重複性，一連串動作是姿勢步驟的累積，因此，動態拍攝，不可能「來不及」按快門，當拍攝對象出現第一、二步驟後，一定會發展到第七、八步驟，故，更不必用連拍完成運氣式的期待。攝影人需學習習慣步驟的次序認知。</p><p>野鳥飛行速度影響振次和振幅，吾人或可共同認知以時速五十公里為準，去理解牠們。若以每秒十張的連拍，即知十分之一秒間隔的野鳥羽翅在空間的變化模式。簡單說，預知「等一下」發生的事，是拍飛鳥必備知能。練習拍攝若干次，大小類似的野鳥，便可獲得一致的預知結果，一生適用。</p><p>每秒八張的連拍大白鷺飛行，或許看到第二、四、六、八張的姿態是一樣的，飛姿週期已確知，將來則無須連拍這麼多張。看鳥飛行，要用電影慢拍快放的道理體會，八分之一秒，其實是「很長」的時間。吾人拍照，不必企圖一次連拍，得有三張如願成果，一張如實的滿足，便是作品。</p><p>第一次接觸特定飛鳥，作者主張盡量使用連拍，以獲取更豐富的反省和檢討內容，以達「視其所以，觀其所由，察其所安」的境地。第二次拍攝，就是熟手，運籌帷幄。</p><p>知而後行是攝影屬性。和拍攝對象作知其所以然的認知，再配合同理心，野鳥行為就像自己的行為，感情投射給野鳥之後，密契經驗產生，按快門行為是不知不覺的，作品自生。</p><p>野鳥飛姿，何嘗不是，一切食衣住行有關飛姿的問題，善加觀察，一勞永逸地自在拍攝。作者至今依然使用手動調焦，享受必然成功的樂趣；連拍幫我快速捲片，卻不能幫我創造作品的契機。</p>
+
+    <div class="divider">圖例示解</div>
+
+    <p class="section-head">飛行模式的探索起點（1-1 / 1-2）</p>
+    <div class="photo-block"><span class="photo-label">1-1 / 1-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-001.jpeg" alt="1-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-002.jpeg" alt="1-2" loading="lazy"></div></div><p class="photo-caption">1-1 當年以軟片拍洋燕，認知有限，偶遇飛姿相同的畫面，才開始對飛行模式產生探索動機。<br><br>1-2 愛拍「飛行版」的同好，再回頭學學攝影基本的歷程，溫故知新，可以為師。</p></div>
+
+    <p class="section-head">不同鳥種的飛行類化（2-1 / 2-2）</p>
+    <div class="photo-block"><span class="photo-label">2-1 / 2-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-003.jpeg" alt="2-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-004.jpeg" alt="2-2" loading="lazy"></div></div><p class="photo-caption">2-1 飛行有一定的物理原則，不同種水鳥，也有一樣的飛姿之可能性。圖中裏海燕鷗比蒼鷺小得多。<br><br>2-2 可以由對一種野鳥的飛行模式，類化到另一種野鳥飛姿上的體會。</p></div>
+
+    <p class="section-head">快門時機塑造羽翅形態（3-1 / 3-2）</p>
+    <div class="photo-block"><span class="photo-label">3-1 / 3-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-005.jpeg" alt="3-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-006.jpeg" alt="3-2" loading="lazy"></div></div><p class="photo-caption">3-1 大小有別的兩種鳥，羽翅的形態，也可以有意識地被快門時機塑造出來。<br><br>3-2 大小有別的兩種鳥，羽翅的形態，也可以有意識地被快門時機塑造出來。</p></div>
+
+    <p class="section-head">一字型飛行的趣味（4-1 / 4-2）</p>
+    <div class="photo-block"><span class="photo-label">4-1 / 4-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-007.jpeg" alt="4-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-008.jpeg" alt="4-2" loading="lazy"></div></div><p class="photo-caption">4-1 觀察愈細膩，愈能看到「特殊」形相的可能，一字型飛行，自有一番趣味。<br><br>4-2 一字型飛行，自有一番趣味。</p></div>
+
+    <p class="section-head">飛姿的情節與情緒（5-1 / 5-2 / 5-3）</p>
+    <div class="photo-block"><span class="photo-label">5-1 / 5-2 / 5-3</span><div class="pgrid pgrid-3"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-009.jpeg" alt="5-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-010.jpeg" alt="5-2" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-011.jpeg" alt="5-3" loading="lazy"></div></div><p class="photo-caption">5-1 飛姿可以表現「情節」，可以展現不同「情緒」，這「平和」感受是不是別有一番風情？<br><br>5-2 飛姿可以表現「情節」，可以展現不同「情緒」。<br><br>5-3 飛姿可以表現「情節」，可以展現不同「情緒」。</p></div>
+
+    <p class="section-head">逆風起降的習慣掌握（6-1 / 6-2）</p>
+    <div class="photo-block"><span class="photo-label">6-1 / 6-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-012.jpeg" alt="6-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-013.jpeg" alt="6-2" loading="lazy"></div></div><p class="photo-caption">6-1 每一隻鳥都會選擇逆風起飛和逆風下降，就個體言，其飛行習慣幾乎相同，觀察一兩次，就知在何處拍出適切照片了。<br><br>6-2 每一隻鳥都會選擇逆風起飛和逆風下降，觀察一兩次，就知在何處拍出適切照片了。</p></div>
+
+    <p class="section-head">共同創作：人鳥同步的快門意識（7-1 / 7-2 / 7-3）</p>
+    <div class="photo-block"><span class="photo-label">7-1 / 7-2 / 7-3</span><div class="pgrid pgrid-3"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-014.jpeg" alt="7-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-015.jpeg" alt="7-2" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-016.jpeg" alt="7-3" loading="lazy"></div></div><p class="photo-caption">7-1 只要掌控有限環境，野鳥習慣不分公母，可能出現同一形式的畫面內容。7-1是母鳥，均由後枝飛到前枝，再入巢餵雛。<br><br>7-2 7-2是公鳥，均由後枝飛到前枝，再入巢餵雛。每根羽毛都在快門掌控之中。<br><br>7-3 攝影者和野鳥同時備妥拍照意識和行為，是共同創作作品的元素。</p></div>
+
+    <p class="section-head">起飛與下降的時機探索（8-1 至 8-5）</p>
+    <div class="photo-block"><span class="photo-label">8-1 / 8-2 / 8-3</span><div class="pgrid pgrid-3"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-017.jpeg" alt="8-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-018.jpeg" alt="8-2" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-019.jpeg" alt="8-3" loading="lazy"></div></div><p class="photo-caption">8-1 起飛和下降，拍攝變數較少，初學者可由此開始學習，體會自我的穩定度。<br><br>8-2 進而試用按快門時機的時間差，探索進一步的野鳥飛姿。<br><br>8-3 一個連續性的起飛動作中，試將動作工作分析成十個步驟，若第三個步驟和第八個步驟分別出現時按下快門，便是對應不同畫面呈像的區別。</p></div>
+    <div class="photo-block"><span class="photo-label">8-4 / 8-5</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-020.jpeg" alt="8-4" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-021.jpeg" alt="8-5" loading="lazy"></div></div><p class="photo-caption">8-4 連拍能拍出景深，不能拍到焦點，建議近距拍攝飛向鏡頭畫面，手動調焦容易控制局面。<br><br>8-5 此情境的焦點改變和快門時機設定要合一，進而試用按快門時機的時間差。</p></div>
+
+    <p class="section-head">最佳練習環境（9-1 / 9-2）</p>
+    <div class="photo-block"><span class="photo-label">9-1 / 9-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-022.jpeg" alt="9-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-023.jpeg" alt="9-2" loading="lazy"></div></div><p class="photo-caption">9-1 這類照片是最容易控制的場合。野鳥和攝影者都處於極簡單的習慣模式之中，信度、效度均高，是初學者練習的最佳環境。<br><br>9-2 野鳥和攝影者都處於極簡單的習慣模式之中，信度、效度均高，是初學者練習的最佳環境。</p></div>
+
+    <p class="section-head">小型鳥的振翅掌握（10-1 / 10-2）</p>
+    <div class="photo-block"><span class="photo-label">10-1 / 10-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-024.jpeg" alt="10-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-025.jpeg" alt="10-2" loading="lazy"></div></div><p class="photo-caption">10-1 小型鳥振翅速率快，攝影者心要放靜，還是可以看到所有情態。<br><br>10-2 小型鳥振翅速率快，攝影者心要放靜，還是可以看到所有情態。</p></div>
+
+    <p class="section-head">羽毛的飛行意義（11-1 / 11-2）</p>
+    <div class="photo-block"><span class="photo-label">11-1 / 11-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-026.jpeg" alt="11-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-027.jpeg" alt="11-2" loading="lazy"></div></div><p class="photo-caption">11-1 飛行中，每根羽毛都有飛行意義，只有掌控特定情境，才會出現特別的羽毛動作，將羽毛表情展露出來。<br><br>11-2 飛行中，每根羽毛都有飛行意義，只有掌控特定情境，才會出現特別的羽毛動作，將羽毛表情展露出來。</p></div>
+
+    <p class="section-head">尾羽的煞車與轉向（12-1 / 12-2）</p>
+    <div class="photo-block"><span class="photo-label">12-1 / 12-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-028.jpeg" alt="12-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-029.jpeg" alt="12-2" loading="lazy"></div></div><p class="photo-caption">12-1 尾羽在煞車和轉向的時候充分使用。適當的攝影角度下，可拍到較大面積的飛羽。<br><br>12-2 尾羽在煞車和轉向的時候充分使用。適當的攝影角度下，可拍到較大面積的飛羽。</p></div>
+
+    
+    <div class="divider">——</div>
+
+    <p class="section-head">夜間飛行的神秘姿態（13-1 / 13-2）</p>
+    <div class="photo-block"><span class="photo-label">13-1 / 13-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-030.jpeg" alt="13-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-031.jpeg" alt="13-2" loading="lazy"></div></div><p class="photo-caption">13-1 夜鷹正面衝鏡而來，雙翼展開形成對稱V字，暗黑背景下的光影將鱗片紋路雕塑出金屬質感，是難得一見的夜間飛行正面構圖。<br><br>13-2 黃昏下的牛背鷺口銜細枝振翅起飛，正面展翅與懸掛的雙腳形成自然十字構圖，深色背景烘托出純白羽色的張力。</p></div>
+
+    <p class="section-head">水岸低飛與林間穿梭（14-1 / 14-2）</p>
+    <div class="photo-block"><span class="photo-label">14-1 / 14-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-032.jpeg" alt="14-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-033.jpeg" alt="14-2" loading="lazy"></div></div><p class="photo-caption">14-1 白鷺貼水低飛，翼展超越畫幅寬度，水面漣漪形成自然的視覺縱深，呈現側面飛行的優雅弧線。<br><br>14-2 牛背鷺銜枝側飛，翅膀層次分明，綠林散景自然，是一幅展現築巢行為的動態側面飛行紀錄。</p></div>
+
+    <p class="section-head">仰角捕捉小型鳥的飛行細節（15-1 / 15-2）</p>
+    <div class="photo-block"><span class="photo-label">15-1 / 15-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-034.jpeg" alt="15-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-035.jpeg" alt="15-2" loading="lazy"></div></div><p class="photo-caption">15-1 從仰角捕捉小型褐色鳥俯衝瞬間，扇形展開的尾羽與上揚的翅膀構成充滿動感的幾何形態，深色背景讓羽毛細節清晰呈現。<br><br>15-2 麻雀急速煞停的瞬間，雙翼向後展開，尾羽張開如扇，每根羽毛的紋路與白色羽緣均清晰可見，藍天背景增添了畫面的明亮感。</p></div>
+
+    <p class="section-head">掠水捕魚與爭鬥展翅（16-1 / 16-2 / 16-3）</p>
+    <div class="photo-block"><span class="photo-label">16-1 / 16-2 / 16-3</span><div class="pgrid pgrid-3"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-036.jpeg" alt="16-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-037.jpeg" alt="16-2" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-038.jpeg" alt="16-3" loading="lazy"></div></div><p class="photo-caption">16-1 白鷺俯衝入水捕魚，水花四濺，雙翼在水面上方撐開形成傘狀，魚口已然在握，是難度極高的入水瞬間捕捉。<br><br>16-2 大白鷺在霧色灰調背景下大幅展翅，嘴喙張開、蓑羽飛散，展現出鷺鳥領地爭鬥時最戲劇性的姿態。<br><br>16-3 白頭翁在綠草間振翅，嘴喙微張，背景的草穗形成柔和的綠色散景，小型鳥類的飛行活力躍然紙上。</p></div>
+
+    <p class="section-head">高翔的高蹺鴴（17-1 / 17-2）</p>
+    <div class="photo-block"><span class="photo-label">17-1 / 17-2</span><div class="photo-pair"><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-039.jpeg" alt="17-1" loading="lazy"></div><div class="pp-wrap"><img src="images/bird-flight-control/bird-flight-control-040.jpeg" alt="17-2" loading="lazy"></div></div><p class="photo-caption">17-1 高蹺鴴黑白分明的翅膀在藍灰色水面上構成強烈的明暗對比，粉紅長腳微微收起，飛行路線俐落直接。<br><br>17-2 同樣的高蹺鴴從較近距離捕捉，細白頸羽在飛行氣流中微微張開，可見頸部羽毛的細膩質感，背景的水面紋理增添了畫面的空間感。</p></div>
+
+
+  </div>
+</div>
+
+<footer class="closing">
+  <p class="closing-text">美麗的鳥，按快門即可獲得，鳥的美麗，卻要精心「設計」和「安排」。攝影者的內在、外在修養，奠定設計和安排的能力基礎。</p>
+  <p class="closing-sig">范兆雄 · 野鳥生態攝影</p>
+</footer>
+</body>
+</html>

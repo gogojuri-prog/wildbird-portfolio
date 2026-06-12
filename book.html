@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>野鳥攝影｜范兆雄</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&display=swap');
+:root{--ink:#1c1c1a;--paper:#f6f3ec;--sand:#c9bc99;--moss:#4e5f3c;--horizon:#7a92a0;--dusk:#2e3b44;--accent:#a84f22;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Serif TC','Georgia',serif;line-height:1.95;font-size:16px}
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;background:rgba(246,243,236,.92);backdrop-filter:blur(12px);padding:0 32px;height:48px;border-bottom:1px solid rgba(201,188,153,.3)}
+.site-nav a{text-decoration:none;font-size:.7rem;letter-spacing:.2em;color:var(--accent);font-family:'Noto Serif TC','Georgia',serif;transition:opacity .2s}
+.site-nav a:hover{opacity:.65}
+
+
+.book-header{max-width:860px;margin:0 auto;padding:112px 56px 64px}
+.book-eyebrow{font-size:.68rem;letter-spacing:.4em;color:var(--accent);font-weight:500;margin-bottom:16px}
+.book-title{font-size:clamp(2.2rem,5vw,4rem);font-weight:300;line-height:1.2;letter-spacing:.08em;margin-bottom:16px}
+.book-author{font-size:.88rem;color:var(--horizon);letter-spacing:.25em;margin-bottom:40px}
+.book-desc{max-width:540px;font-size:.9rem;color:rgba(28,28,26,.6);line-height:2.1;font-weight:300}
+.toc-wrap{max-width:860px;margin:0 auto;padding:0 56px 120px}
+.toc-divider{width:36px;height:1px;background:var(--accent);margin-bottom:56px}
+.toc-section{margin-bottom:52px}
+.toc-section-label{font-size:.65rem;letter-spacing:.4em;color:var(--accent);font-weight:500;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(201,188,153,.4)}
+.toc-item{display:flex;align-items:baseline;gap:16px;padding:13px 0;border-bottom:1px solid rgba(201,188,153,.2);text-decoration:none;color:var(--ink);transition:color .2s}
+.toc-item:hover{color:var(--accent)}
+.toc-num{font-size:.68rem;letter-spacing:.15em;color:var(--sand);flex-shrink:0;width:60px}
+.toc-name{font-size:.95rem;letter-spacing:.04em;flex:1}
+.toc-sub{font-size:.82rem;color:var(--horizon);letter-spacing:.06em}
+.toc-arrow{font-size:.7rem;color:var(--sand);flex-shrink:0}
+.toc-item:hover .toc-arrow{color:var(--accent)}
+.closing{background:var(--dusk);color:rgba(255,255,255,.6);padding:64px 0;text-align:center}
+.closing-sig{font-size:.8rem;letter-spacing:.25em;color:var(--sand)}
+@media(max-width:768px){.book-header,.toc-wrap{padding-left:28px;padding-right:28px}}
+
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a href="index.html">← 文集</a>
+</nav>
+
+<div class="book-header">
+  <p class="book-eyebrow">PHOTOGRAPHY · BOOK</p>
+  <h1 class="book-title">野鳥攝影</h1>
+  <p class="book-author">范兆雄 著</p>
+  <p class="book-desc">修養、技藝、與拍鳥情境是互為連結的關係。從器材選擇、測光曝光，到人鳥互動、攝影哲學——完整十八章，涵蓋野鳥攝影的技術理論與創作境界。</p>
+</div>
+
+<div class="toc-wrap">
+  <div class="toc-divider"></div>
+  <div class="toc-section">
+  <p class="toc-section-label">前言</p>
+  <a class="toc-item" href="book-preface.html">
+      <span class="toc-num"></span>
+      <span class="toc-name">自序</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-swallow.html">
+      <span class="toc-num"></span>
+      <span class="toc-name">洋燕向我飛的感思</span>
+      <span class="toc-arrow">→</span>
+    </a>
+</div><div class="toc-section">
+  <p class="toc-section-label">各章</p>
+  <a class="toc-item" href="book-ch01-gear.html">
+      <span class="toc-num">第一章</span>
+      <span class="toc-name">器材與裝備</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch02-lens.html">
+      <span class="toc-num">第二章</span>
+      <span class="toc-name">鏡頭</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch03-exposure.html">
+      <span class="toc-num">第三章</span>
+      <span class="toc-name">ASA（ISO）、光圈、快門、焦點</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch03a-blur.html">
+      <span class="toc-num">附三之一</span>
+      <span class="toc-name">景深外模糊的意義</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch03b-aperture.html">
+      <span class="toc-num">附三之二</span>
+      <span class="toc-name">光圈速度辨</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch03c-burst.html">
+      <span class="toc-num">附三之三</span>
+      <span class="toc-name">連拍的迷思</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch04-metering.html">
+      <span class="toc-num">第四章</span>
+      <span class="toc-name">測光與曝光</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch05-compose.html">
+      <span class="toc-num">第五章</span>
+      <span class="toc-name">構圖</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch06-subject.html">
+      <span class="toc-num">第六章</span>
+      <span class="toc-name">野鳥題材拍攝類型</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch07-dynamic.html">
+      <span class="toc-num">第七章</span>
+      <span class="toc-name">野鳥動態美的技術表現方法</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch08-filter.html">
+      <span class="toc-num">第八章</span>
+      <span class="toc-name">幾種濾鏡的使用</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch09-film.html">
+      <span class="toc-num">第九章</span>
+      <span class="toc-name">軟片選用和保存</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch10-sharp.html">
+      <span class="toc-num">第十章</span>
+      <span class="toc-name">照片的鮮銳度</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-ch11-slide.html">
+      <span class="toc-num">第十一章</span>
+      <span class="toc-name">略談正片拍攝、沖洗及相片展示</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-conclusion.html">
+      <span class="toc-num"></span>
+      <span class="toc-name">結論</span>
+      <span class="toc-arrow">→</span>
+    </a>
+</div><div class="toc-section">
+  <p class="toc-section-label">後記與附錄</p>
+  <a class="toc-item" href="book-stilt.html">
+      <span class="toc-num"></span>
+      <span class="toc-name">高蹺鳥也向我飛</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-appendix1.html">
+      <span class="toc-num">附錄一</span>
+      <span class="toc-name">點測光與拍幻燈片</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-appendix2.html">
+      <span class="toc-num">附錄二</span>
+      <span class="toc-name">攝影的觀念</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-author.html">
+      <span class="toc-num"></span>
+      <span class="toc-name">作者簡介</span>
+      <span class="toc-arrow">→</span>
+    </a>
+<a class="toc-item" href="book-notes.html">
+      <span class="toc-num"></span>
+      <span class="toc-name">附註</span>
+      <span class="toc-arrow">→</span>
+    </a>
+</div>
+</div>
+
+<footer class="closing">
+  <p class="closing-sig">范兆雄 · 野鳥生態攝影</p>
+</footer>
+</body>
+</html>
